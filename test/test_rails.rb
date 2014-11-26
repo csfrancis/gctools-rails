@@ -54,4 +54,11 @@ class TestRails < MiniTest::Test
     assert_equal 0, Gctools::Rails::Middleware.new(c).call({})
     assert_equal 0, Gctools::Rails::Timer.value
   end
+
+  def test_gchook
+    assert_equal 0, Gctools::Rails::Timer.value
+    GC.start
+    sleep 0
+    assert_operator Gctools::Rails::Timer.value, :>, 0
+  end
 end
